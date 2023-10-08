@@ -29,12 +29,19 @@ retrievePosts(){
   }
   });
 }
-  
+
+
+onDelete=(id)=>{
+  axios.delete(`http://localhost:3500/student/delete/${id}`).then(res =>{
+      alert("DeleteSuccessfully");
+      this.retrievePosts();
+    } );
+}
   
   render() {
     return (
       <div className="container">
-       <p>Students</p>
+       <h1>Students</h1>
        <table className="table">
          <thead>
            <tr>
@@ -54,7 +61,7 @@ retrievePosts(){
             <tr>
               <th scope="raw">{index+1}</th>
               <td>
-                 <a href={`/student/${'students_id'}`} style={{textDecoration:'none'}}>
+                 <a href={`/student/${students._id}`} style={{textDecoration:'none'}}>
                       {students.fname}
                  </a>
                  
@@ -65,11 +72,11 @@ retrievePosts(){
               <td>{students.grade}</td>
               <td>{students.address}</td>
               <td>
-                <a className= 'btn btn-warning' href = "#">
+                <a className= 'btn btn-warning' href = {`/student/update/${students._id}`}>
                   <i className='fas fa-edit'></i>&nbsp;Edit
                 </a>
                 &nbsp;
-                <a className= 'btn btn-danger' href = "#">
+                <a className= 'btn btn-danger' href = "#" onClick={()=>this.onDelete(students._id)}>
                   <i className='far fa-trash-alt'></i>&nbsp;Delete
                 </a>
               </td>
@@ -78,7 +85,7 @@ retrievePosts(){
          </tbody>
 
        </table>
-       <button className='btn btn-success'><a href="/add" style={{textDecoration:'none',color:'white'}}>Create New Student</a></button>
+       <button className='btn btn-success'><a href="/student/create" style={{textDecoration:'none',color:'white'}}>Add New Student</a></button>
       </div>
     )
   }
